@@ -1,0 +1,298 @@
+/* بارگذاری فونت 'iran' */
+@font-face {
+    font-family: iran;
+    src: url('./fonts/IRANSansWeb.ttf') format('truetype'); /* مسیر فونت را بر اساس محل ذخیره‌سازی تنظیم کنید */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* متغیرهای CSS برای رنگ‌ها و اندازه‌ها */
+:root {
+    --sidebar-width: 350px;
+    --sidebar-bg: #2c3e50;
+    --sidebar-text-color: #ecf0f1;
+    --sidebar-box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
+    --button-bg: #2980b9;
+    --button-hover-bg: #3498db;
+    --button-active-bg: #1abc9c;
+    --button-text-color: #ecf0f1;
+    --find-button-bg: #27ae60;
+    --find-button-hover-bg: #2ecc71;
+    --find-button-active-bg: #16a085;
+    --find-button-text-color: #ecf0f1;
+    --toggle-button-bg: #2980b9;
+    --toggle-button-hover-bg: #3498db;
+    --toggle-button-active-bg: #1abc9c;
+    --info-box-bg: rgba(44, 62, 80, 0.9);
+    --info-box-text-color: #ecf0f1;
+    --font-family: iran;
+    --transition-duration: 0.3s;
+    --border-radius: 8px;
+    --input-border: #34495e;
+    --input-focus-border: #1abc9c;
+    --background-color: #ecf0f1;
+    --text-color: #2c3e50;
+}
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: iran !important;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* کانتینر بوم */
+#canvas-container {
+    flex: 1;
+    position: relative;
+}
+
+/* سایدبار */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -var(--sidebar-width);
+    width: var(--sidebar-width);
+    height: 100%;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text-color);
+    box-shadow: var(--sidebar-box-shadow);
+    overflow-y: auto;
+    transition: left var(--transition-duration) ease;
+    z-index: 10;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    left: -100%;
+    transition: 3s;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    color: var(--button-bg);
+}
+
+.sidebar label {
+    display: block;
+    font-size: 1em;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #bdc3c7;
+}
+
+.sidebar input,
+.sidebar select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    background-color: #34495e;
+    color: #ecf0f1;
+    transition: border-color var(--transition-duration), background-color var(--transition-duration), color var(--transition-duration);
+}
+
+.sidebar input::placeholder,
+.sidebar select::placeholder {
+    color: #7f8c8d;
+}
+
+.sidebar input:focus,
+.sidebar select:focus {
+    border-color: var(--input-focus-border);
+    outline: none;
+    box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+    background-color: #3c5a73;
+}
+
+.sidebar button {
+    padding: 12px;
+    background-color: var(--button-bg);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color var(--transition-duration), transform 0.2s;
+    margin-bottom: 15px;
+}
+
+.sidebar button:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px);
+}
+
+.sidebar button:active {
+    background-color: var(--button-active-bg);
+    transform: translateY(0);
+}
+
+/* دکمه پیدا کردن کوچک‌ترین جعبه */
+.sidebar .find-button {
+    background-color: var(--find-button-bg);
+}
+
+.sidebar .find-button:hover {
+    background-color: var(--find-button-hover-bg);
+}
+
+.sidebar .find-button:active {
+    background-color: var(--find-button-active-bg);
+}
+
+/* دکمه باز/بسته کردن سایدبار */
+.toggle-sidebar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--toggle-button-bg);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 15;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: background-color var(--transition-duration), transform 0.2s;
+}
+
+.toggle-sidebar:hover {
+    background-color: var(--toggle-button-hover-bg);
+    transform: translateY(-2px);
+}
+
+.toggle-sidebar:active {
+    background-color: var(--toggle-button-active-bg);
+    transform: translateY(0);
+}
+
+/* اطلاعات محصول */
+#product-info {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: var(--info-box-bg);
+    color: var(--info-box-text-color);
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    display: none;
+    z-index: 20;
+    font-size: 1em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: opacity var(--transition-duration);
+}
+
+/* ریسپانسیو دیزاین */
+@media (max-width: 1024px) {
+    :root {
+        --sidebar-width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 100%;
+    }
+
+    .sidebar {
+        left: -100%;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .toggle-sidebar {
+        width: 45px;
+        height: 45px;
+        font-size: 1.5em;
+    }
+
+    .sidebar h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .sidebar label,
+    .sidebar input,
+    .sidebar select,
+    .sidebar button {
+        font-size: 0.95em;
+    }
+
+    #product-info {
+        top: 70px;
+        right: 15px;
+        padding: 12px 18px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .toggle-sidebar {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3em;
+    }
+
+    .sidebar h3 {
+        font-size: 1.3em;
+    }
+
+    .sidebar label,
+    .sidebar input,
+    .sidebar select,
+    .sidebar button {
+        font-size: 0.85em;
+        padding: 8px;
+    }
+
+    #product-info {
+        top: 60px;
+        right: 10px;
+        padding: 10px 15px;
+        font-size: 0.85em;
+    }
+}
+
+/* اسکرول نوار زیبا برای سایدبار */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #34495e;
+    border-radius: var(--border-radius);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #7f8c8d;
+    border-radius: var(--border-radius);
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #95a5a6;
+}
